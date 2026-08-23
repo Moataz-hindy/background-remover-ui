@@ -173,6 +173,10 @@ function App() {
           >
             {loading ? "Processing..." : "Remove Background"}
           </button>
+          
+          <p className="gpu-note">
+            (Note: The free GPU backend may take ~15 seconds to wake up on the first request!)
+          </p>
         </div>
 
         {isCameraOpen && (
