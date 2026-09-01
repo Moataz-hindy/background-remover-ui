@@ -7,7 +7,6 @@ function App() {
   const [preview, setPreview] = useState(null);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [modelChoice, setModelChoice] = useState("Model C: The Ensemble (Averages A + B)");
   
   // Camera state
   const [isCameraOpen, setIsCameraOpen] = useState(false);
@@ -93,9 +92,8 @@ function App() {
     try {
       const app = await Client.connect("moataz115/background-remover");
       
-      const response = await app.predict("/remove_background", [
-        image, 		
-        modelChoice, 
+      const response = await app.predict("/predict", [
+        image,
       ]);
 
       setResult(response.data[0].url);
@@ -133,7 +131,7 @@ function App() {
             <span className="emoji">✨</span> 
             <span className="gradient-text">U-Net Background Remover</span>
           </h1>
-          <p>Powered by Hugging Face ZeroGPU. Paste an image (Ctrl+V) or use your camera.</p>
+          <p>Powered by a custom Residual U-Net built from scratch. Inference utilizes Test-Time Augmentation (TTA) and OpenCV Post-Processing. Paste an image (Ctrl+V) or use your camera.</p>
         </header>
 
         <div className="controls-section">
@@ -152,18 +150,6 @@ function App() {
                 ✖ Cancel Camera
               </button>
             )}
-          </div>
-
-          <div className="model-selection">
-            <select 
-              value={modelChoice} 
-              onChange={(e) => setModelChoice(e.target.value)}
-              className="glass-select"
-            >
-              <option value="Model A: The Portrait Specialist">Model A: The Portrait Specialist</option>
-              <option value="Model B: The Generalist (Harsh Lighting)">Model B: The Generalist (Harsh Lighting)</option>
-              <option value="Model C: The Ensemble (Averages A + B)">Model C: The Ensemble</option>
-            </select>
           </div>
 
           <button 
