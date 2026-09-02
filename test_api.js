@@ -2,7 +2,10 @@ import { Client, handle_file } from "@gradio/client";
 
 async function run() {
   try {
-    const app = await Client.connect("moataz115/background-remover");
+    console.log("Connecting to space with token...");
+    const app = await Client.connect("moataz115/background-remover", {
+      hf_token: "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"
+    });
     
     console.log("Connecting to space...");
     const response = await app.predict("/remove_background", [

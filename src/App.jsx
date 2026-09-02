@@ -90,7 +90,9 @@ function App() {
     setLoading(true);
 
     try {
-      const app = await Client.connect("moataz115/background-remover");
+      const app = await Client.connect("moataz115/background-remover", {
+        token: import.meta.env.VITE_HF_TOKEN || "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"
+      });
       
       const response = await app.predict("/remove_background", [
         handle_file(image),
