@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Client } from "@gradio/client";
+import { Client, handle_file } from "@gradio/client";
 import './App.css'; 
 
 function App() {
@@ -92,15 +92,16 @@ function App() {
     try {
       const app = await Client.connect("moataz115/background-remover");
       
-      const response = await app.predict("/predict", [
-        image,
+      const response = await app.predict("/remove_background", [
+        handle_file(image),
       ]);
 
-      setResult(response.data[0].url);
+      const resultUrl = response.data[0]?.url || response.data[0];
+      setResult(resultUrl);
       
     } catch (error) {
       console.error("Error removing background:", error);
-      alert("Something went wrong! Check the console.");
+      alert(error.message || "Something went wrong! Check the console.");
     } finally {
       setLoading(false);
     }
